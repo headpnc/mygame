@@ -136,7 +136,14 @@ start.addEventListener("mousedown", function() {
 })
 
 volume.addEventListener("input", function(e){
-	music.volume = volume.value / 100;
+	music.volume = volume.value / 100;	
+	electricKill.volume = volume.value / 100;
+	lifeUp.volume = volume.value / 100;
+	timeUp.volume = volume.value / 100;
+	shieldUp.volume = volume.value / 100;
+	slowTimePress.volume = volume.value / 100;
+	fail.volume = volume.value / 100;
+	over.volume = volume.value / 100;
 	killSound.volume = volume.value / 100;
 });
 
