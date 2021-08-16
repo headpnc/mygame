@@ -329,8 +329,8 @@ det.speed = slowTime? det.slowSpeed : det.fastSpeed;
 			&& det.y > candies[i].y - 60) {
 			score -= candies[i].points * 2;
 			scoreLive.innerText = score;
-			candies.splice(i, 1);
-		}		
+			candies[i].det = true;
+			}		
 		if(
 		   det.alive 
 		&& det.x < candies[i].x + 50 
@@ -355,7 +355,7 @@ det.speed = slowTime? det.slowSpeed : det.fastSpeed;
 ///////////////////////////CANDIES
 
 class Candy {
-	constructor(sprite, width, height, x, y, speed, points){
+	constructor(sprite, width, height, x, y, speed, points, det){
 		this.sprite = sprite;
 		this.width = width;
 		this.height = height;
@@ -363,6 +363,7 @@ class Candy {
 		this.y = y;
 		this.speed = speed;
 		this.points = points;
+		this.det = det;
 
 	}
 }
@@ -400,7 +401,7 @@ const candyobj = {
 }
 
 const candySkins = ["cokolada", "nutela", "kinder", "cokolada", "cokolada", "cokolada", "kinder",];
-const candies = [];
+let candies = [];
 let randomCandy;
 
 function spawnCandy() {
@@ -412,7 +413,8 @@ function spawnCandy() {
 	const y = canvas.height + Math.floor(Math.random()* candyobj[randomCandy].y + 100);
 	const {speed} = candyobj[randomCandy];
 	const {points} = candyobj[randomCandy];
-	candies.push(new Candy(sprite, width, height, x, y, speed, points));
+	const det = false;
+	candies.push(new Candy(sprite, width, height, x, y, speed, points, det));
 }
 
 function moveCandy(c, i){
@@ -421,8 +423,13 @@ function moveCandy(c, i){
 		score += c.points;
 		scoreLive.innerText = score;
 		if(score > highScore) highScore = score;
-		candies.splice(i, 1)};		
-}
+		candies.splice(i, 1)
+	}
+	if(c.det === true){	
+      candies = candies.filter(c => c.det === false);	
+    }
+}				
+
 
 
 ///////////////////////////LIVES, TIME and SHIELD
